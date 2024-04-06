@@ -7463,4 +7463,6 @@
   'Maintenance_is_on' => 'Maintenance is on',
   'Maintenance_is_off' => 'Maintenance is off',
   'you_can_not_update_this_on_demo_mode' => 'You can not update this on demo mode',
+  'Try_after_sometime' => 'Try after sometime',
+  'We_are_sorry_server_is_not_responding' => 'We are sorry server is not responding',
 );
