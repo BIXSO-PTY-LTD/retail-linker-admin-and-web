@@ -1,15 +1,18 @@
 # Server config
 
+_install php, mysql, composer, nginx
+
+```
+apt update && apt install -y mysql-server composer nginx php8.2 php8.2-curl php8.2-bcmath php8.2-ctype php8.2-mbstring php8.2-pdo php8.2-tokenizer php8.2-xml php8.2-zip php8.2-fileinfo php8.2-gd php8.2-mysql php8.2-fpm libapache2-mod-php
+```
+
 _ clone project to `/var/www/retail-linker-admin-and-web`
 
 _ run command:
 
 ```
-sudo chown -R www-data:www-data /var/www/retail-linker-admin-and-web/storage/
-sudo chmod -R 775 /var/www/retail-linker-admin-and-web/storage/
+chmod -R 777 /var/www/retail-linker-admin-and-web
 ```
-
-_install php, mysql, composer, nginx
 
 _nginx config:
 
@@ -64,7 +67,7 @@ _create .env in project root folder:
 
 ```
 
-APP_NAME=retailLinker
+APP_NAME=RetailLinker
 APP_ENV=development
 APP_KEY=APPLICATION_UNIQUE_KEY_DONT_COPY
 APP_DEBUG=true
@@ -84,7 +87,8 @@ DB_PASSWORD=db_password
 _SSL:
 
 ```
-apt install certbot python3-certbot-nginx
+ufw enable
 ufw allow 'Nginx Full'
+apt install certbot python3-certbot-nginx
 sudo certbot --nginx -d retaillinker.com -d www.retaillinker.com
 ```
