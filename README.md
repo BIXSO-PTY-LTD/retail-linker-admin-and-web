@@ -1,21 +1,32 @@
 # Server config
 
-_install php, mysql, composer, nginx
+_ Install necessary libs
 
 ```
 apt update && apt install -y mysql-server composer nginx php8.2 php8.2-curl php8.2-bcmath php8.2-ctype php8.2-mbstring php8.2-pdo php8.2-tokenizer php8.2-xml php8.2-zip php8.2-fileinfo php8.2-gd php8.2-mysql php8.2-fpm libapache2-mod-php
 ```
 
+_ Create new SSH key
+
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
 _ clone project to `/var/www/retail-linker-admin-and-web`
 
-_ run command:
+_ Install libs
 
 ```
-sudo chown -R www-data:www-data /var/www/retail-linker-admin-and-web/storage/
-sudo chmod -R 775 /var/www/retail-linker-admin-and-web/storage/
+composer update
 ```
 
-_nginx config:
+_ Run command:
+
+```
+sudo chmod -R 777 /var/www/retail-linker-admin-and-web
+```
+
+_ Edit nginx config at `/etc/nginx/sites-available/default`
 
 ```
 server {
@@ -50,10 +61,22 @@ server {
             deny all;
         }
 }
-
 ```
 
-_sql config:
+_ Add SSL:
+
+```
+apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d retaillinker.com -d www.retaillinker.com
+```
+
+_ Restart Nginx:
+
+```
+service nginx restart
+```
+
+_ Config mysql:
 
 ```
 
@@ -64,11 +87,15 @@ GRANT ALL PRIVILEGES ON db_name . * TO 'db_user'@'localhost';
 
 ```
 
-_SSL:
+_ Enable firewall
 
 ```
 ufw enable
 ufw allow 'Nginx Full'
-apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d retaillinker.com -d www.retaillinker.com
+```
+
+_ If get CORS error, add this to nginx config:
+
+```
+add_header Access-Control-Allow-Origin $http_origin;
 ```
